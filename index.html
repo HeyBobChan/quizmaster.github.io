@@ -1,27 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quiz Master</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Quiz Master</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Quiz Master</h1>
-        <nav>
-            <ul>
-                <li><a href="quiz">Play</a></li>
-                <li><a href="about">About the Quiz Master</a></li>
-                <li><a href="contact">Contact and Book an Event</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <img src="busby.jpg" alt="Quiz Master Logo">
-        <h2>About Quiz Master</h2>
-        <p>Quiz Master is a popular pub quiz business that organizes fun and engaging quizzes for groups of friends and colleagues. With our extensive knowledge base and expert quiz masters, you can be sure that your quiz will be a hit!</p>
-        <p>Whether you're looking for a casual night out or a fun team-building activity, Quiz Master has you covered. Contact us today to book your quiz and experience the thrill of trivia!</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/KLLn_fI2Gjs?si=SgQWswMqURwCtEis" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </main>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="#">
+          <img src="{{ url_for('static', filename='busby.jpg') }}" alt="Quiz Master Logo">
+          <h1>Quiz Master</h1>
+        </a>
+      </div>
+      <ul>
+        <li><a href="/quiz">Play</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="about">
+      <h2>About Quiz Master</h2>
+      <p>Quiz Master is a popular pub quiz business that organizes fun and engaging quizzes for groups of friends and colleagues. With our extensive knowledge base and expert quiz masters, you can be sure that your quiz will be a hit!</p>
+      <p>Whether you're looking for a casual night out or a fun team-building activity, Quiz Master has you covered. Contact us today to book your quiz and experience the thrill of trivia!</p>
+    </section>
+    <section class="video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/KLLn_fI2Gjs?si=SgQWswMqURwCtEis" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 Quiz Master. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
 </body>
 </html>
