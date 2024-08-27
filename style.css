@@ -1,4 +1,4 @@
-/* General Styles */
+
 :root {
   --primary-color: #2c3e50;
   --secondary-color: #3498db;
@@ -50,7 +50,7 @@ header {
 
 .logo img {
   height: 40px;
-  margin-left: 0.5rem;
+  margin-right: 0.5rem; /* Adjusted for RTL */
 }
 
 nav ul {
@@ -59,7 +59,7 @@ nav ul {
 }
 
 nav ul li {
-  margin-right: 1rem;
+  margin-left: 1rem; /* Adjusted for RTL */
 }
 
 nav ul li a {
@@ -159,7 +159,7 @@ footer p {
 
 .social-icons a {
   color: #fff;
-  margin-right: 1rem;
+  margin-left: 1rem; /* Adjusted for RTL */
   font-size: 1.25rem;
   transition: color 0.3s ease;
 }
