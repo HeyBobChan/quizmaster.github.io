@@ -6,7 +6,7 @@ app = Flask(__name__)
 def hello():
     return render_template('index.html')
 
-@app.route('/quiz')
+@app.route('/services')
 def quiz():
     return render_template('quiz.html')
 
