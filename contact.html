@@ -1,32 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Quiz Master</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <style>
-        img {
-            max-width: 30%; /* Adjust the percentage value to make the image smaller or larger */
-            height: auto;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Night - Contact Us</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <header>
-        <h1>Call me Baby</h1>
+        <div class="logo">
+            <img src="static/images/logo.jpg" alt="Quiz Night Logo" width="100" height="100">
+            <h1>Quiz Night</h1>
+        </div>
         <nav>
             <ul>
-                <li><a href="index">Home</a></li>
-                <li><a href="about">About the Quiz Master</a></li>
-                <li><a href="quiz">Play with me</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="quiz.html">Our Quizzes</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <img src="busby.jpg" alt="Quiz Master Logo">
-        <h2>About Quiz Master</h2>
-        <p>Quiz Master is a popular pub quiz business that organizes fun and engaging quizzes for groups of friends and colleagues. With our extensive knowledge base and expert quiz masters, you can be sure that your quiz will be a hit!</p>
-        <p>Whether you're looking for a casual night out or a fun team-building activity, Quiz Master has you covered. Contact us today to book your quiz and experience the thrill of trivia!</p>
+        <section class="contact-info">
+            <h2>Contact Us</h2>
+            <img src="static/images/contact.jpg" alt="Contact Us" width="400" height="300">
+            <p>Have questions or want to book a Quiz Night? Get in touch with us!</p>
+            <ul>
+                <li>Email: info@quiznight.com</li>
+                <li>Phone: (555) 123-4567</li>
+                <li>Address: 123 Trivia Lane, Quizville, QZ 12345</li>
+            </ul>
+        </section>
+
+        <section class="contact-form">
+            <h3>Send Us a Message</h3>
+            <form action="#" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Quiz Night. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+        </div>
+    </footer>
 </body>
 </html>
