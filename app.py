@@ -1,23 +1,18 @@
-from flask import Flask, render_template
+import http.server
+import socketserver
 
-app = Flask(__name__)
+# Define the port you want to use
+PORT = 8000
 
-@app.route('/')
-def hello():
-    return render_template('index.html')
+class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        super().end_headers()
 
-@app.route('/services')
-def quiz():
-    return render_template('quiz.html')
+# Create an object of the handler class
+handler_object = MyHttpRequestHandler
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-if __name__ == '__main__':
-    app.run()
-    
+# Define the server and bind it to the port
+with socketserver.TCPServer(("", PORT), handler_object) as httpd:
+    print(f"Serving at port {PORT}")
+    httpd.serve_forever()
