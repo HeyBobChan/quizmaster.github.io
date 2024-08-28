@@ -191,6 +191,36 @@ nav ul li a:hover {
   font-weight: 700;
 }
 
+.about-hero {
+  background-image: linear-gradient(to right, #8e44ad, #e74c3c);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.about-text h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.about-text ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.about-text li {
+  margin-bottom: 10px;
+}
+
 /* CTA Section */
 .cta {
   background-color: var(--secondary-color);
