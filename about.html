@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אודות - קוויזמאסטר</title>
+    <title>אודות קוויזמאסטר - יוסי קומר</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="logos.jpg" alt="קוויזמאסטר לוגו" width="100" height="100">
-                    <h1>קוויזמאסטר</h1>
-                </a>
-            </div>
+        <div class="container">
             <nav>
+                <a href="index.html" class="logo">
+                    <img src="logos.jpg" alt="קוויזמאסטר לוגו" width="50" height="50">
+                    <span>קוויזמאסטר</span>
+                </a>
                 <ul>
                     <li><a href="index.html">דף הבית</a></li>
                     <li><a href="about.html">אודות</a></li>
@@ -27,41 +25,80 @@
     </header>
 
     <main>
-        <section class="about-us">
-            <h2>אודות יוסי קומר</h2>
-            <img src="IMG-20240827-WA0011.jpg" alt="יוסי קומר" width="400" height="300">
-            <p>יוסי קומר הוא שם דבר בעולם הטריוויה והמשחקים בישראל. עם ניסיון עשיר של 12 שנים כמקצוען וכארבעה עשורים בתחום, יוסי מביא עמו ידע עמוק ותשוקה אמיתית לעולם החידות והמשחקים.</p>
-            <ul>
-                <li>יוצר אתר "פרופסור": אתר חידות היגיון ייחודי</li>
-                <li>כותב לתוכניות טלוויזיה מובילות: "המרדף", "האחוזון העליון", "מי רוצה להיות מיליונר", ועוד</li>
-                <li>מנחה אירועי טריוויה בפסטיבלים, אירועים פרטיים ואירועי חברה</li>
-            </ul>
+        <section class="hero about-hero">
+            <div class="container">
+                <h1>אודות יוסי קומר</h1>
+                <p>מומחה טריוויה מוביל בישראל עם ניסיון של עשרות שנים</p>
+            </div>
+        </section>
+
+        <section class="about-content">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="IMG-20240827-WA0011.jpg" alt="יוסי קומר" width="400" height="300">
+                    </div>
+                    <div class="about-text">
+                        <h2>המומחה לטריוויה ומשחקים</h2>
+                        <p>יוסי קומר הוא שם דבר בעולם הטריוויה והמשחקים בישראל. עם ניסיון עשיר של 12 שנים כמקצוען וכארבעה עשורים בתחום, יוסי מביא עמו ידע עמוק ותשוקה אמיתית לעולם החידות והמשחקים.</p>
+                        <ul class="achievements">
+                            <li>יוצר אתר "פרופסור": אתר חידות היגיון ייחודי</li>
+                            <li>כותב לתוכניות טלוויזיה מובילות: "המרדף", "האחוזון העליון", "מי רוצה להיות מיליונר", ועוד</li>
+                            <li>מנחה אירועי טריוויה בפסטיבלים, אירועים פרטיים ואירועי חברה</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="clients">
-            <h3>לקוחות מרוצים</h3>
-            <img src="IMG-20240827-WA0010.jpg" alt="אירוע טריוויה תאגידי" width="300" height="200">
-            <p>המרכז הארצי לבחינות והערכה, פסטיבל שאון חורף, פסטיבל הקולנוע ירושלים, עיריית ירושלים, כאן חדשות, ישראטויס, גוגל ישראל ועוד רבים אחרים</p>
+            <div class="container">
+                <h2>לקוחות מרוצים</h2>
+                <div class="client-grid">
+                    <div class="client-item">
+                        <img src="IMG-20240827-WA0010.jpg" alt="אירוע טריוויה תאגידי" width="300" height="200">
+                        <p>המרכז הארצי לבחינות והערכה</p>
+                    </div>
+                    <div class="client-item">
+                        <img src="client2.jpg" alt="פסטיבל שאון חורף" width="300" height="200">
+                        <p>פסטיבל שאון חורף</p>
+                    </div>
+                    <div class="client-item">
+                        <img src="client3.jpg" alt="פסטיבל הקולנוע ירושלים" width="300" height="200">
+                        <p>פסטיבל הקולנוע ירושלים</p>
+                    </div>
+                    <!-- Add more client items as needed -->
+                </div>
+            </div>
         </section>
 
         <section class="unique-games">
-            <h3>משחקים ייחודיים</h3>
-            <p>יוסי מתמחה ביצירת משחקים מקוריים ומאתגרים</p>
-            <ul>
-                <li>קריוקי שבור: זיהוי שירים משובשים</li>
-                <li>הטחת דעת: חיבור בין תמונות לא קשורות</li>
-                <li>הביקורות מהללות: ניחוש מושאי ביקורת מוזרים</li>
-                <li>תקשורת בין אישית: משחק שיתוף פעולה קבוצתי</li>
-                <li>איפה אני?: משחק זיהוי גיאוגרפי</li>
-                <li>תשבץ ענק בהקרנת VJ: פתרון תשבצים מותאמים אישית בקבוצה</li>
-            </ul>
-            <p>כל משחק נכתב במיוחד לאירוע ויכול להיות מותאם לתחומי העיסוק והעניין של החברה שלכם, כולל השקות מוצרים, נושאי כנסים ועוד.</p>
+            <div class="container">
+                <h2>משחקים ייחודיים</h2>
+                <p>יוסי מתמחה ביצירת משחקים מקוריים ומאתגרים:</p>
+                <ul class="games-list">
+                    <li>קריוקי שבור: זיהוי שירים משובשים</li>
+                    <li>הטחת דעת: חיבור בין תמונות לא קשורות</li>
+                    <li>הביקורות מהללות: ניחוש מושאי ביקורת מוזרים</li>
+                    <li>תקשורת בין אישית: משחק שיתוף פעולה קבוצתי</li>
+                    <li>איפה אני?: משחק זיהוי גיאוגרפי</li>
+                    <li>תשבץ ענק בהקרנת VJ: פתרון תשבצים מותאמים אישית בקבוצה</li>
+                </ul>
+                <p>כל משחק נכתב במיוחד לאירוע ויכול להיות מותאם לתחומי העיסוק והעניין של החברה שלכם, כולל השקות מוצרים, נושאי כנסים ועוד.</p>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>מוכנים לחוות את הקסם של טריוויה מקצועית?</h2>
+                <a href="contact.html" class="cta-button">צרו קשר עכשיו</a>
+            </div>
         </section>
     </main>
 
     <footer>
-        <div class="container footer-content">
-            <p>© 2024 קוויזמאסטר. כל הזכויות שמורות.</p>
+        <div class="container">
+            <p>&copy; 2024 קוויזמאסטר. כל הזכויות שמורות.</p>
             <div class="social-icons">
                 <a href="#" aria-label="פייסבוק"><i class="fab fa-facebook"></i></a>
                 <a href="#" aria-label="טוויטר"><i class="fab fa-twitter"></i></a>

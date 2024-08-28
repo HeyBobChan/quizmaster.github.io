@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>קוויזמאסטר - אירועי טריוויה עם יוסי קומר</title>
+    <title>קוויזמאסטר - אירועי טריוויה מקצועיים</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="logos.jpg" alt="קוויזמאסטר לוגו" width="100" height="100">
-                    <h1>קוויזמאסטר</h1>
-                </a>
-            </div>
+        <div class="container">
             <nav>
+                <a href="index.html" class="logo">
+                    <img src="logos.jpg" alt="קוויזמאסטר לוגו" width="50" height="50">
+                    <span>קוויזמאסטר</span>
+                </a>
                 <ul>
                     <li><a href="index.html">דף הבית</a></li>
                     <li><a href="about.html">אודות</a></li>
@@ -28,30 +26,60 @@
 
     <main>
         <section class="hero">
-            <h2>אירועי טריוויה עם יוסי קומר</h2>
-            <p>ברוכים הבאים לעולם אירועי הטריוויה של יוסי קומר, מומחה טריוויה מוביל בישראל!</p>
-            <p>הזמינו את יוסי קומר לאירוע החברה שלכם! עם ניסיון של עשרות שנים, יוסי מציע חוויות טריוויה מותאמות אישית שיהפכו כל אירוע תאגידי למהנה, מעשיר ובלתי נשכח.</p>
-            <p>גלו כיצד טריוויה מקצועית יכולה לחזק את הקשרים בצוות שלכם ולהפוך את האירוע הבא שלכם להצלחה מסחררת!</p>
-            <a href="contact.html" class="cta-button">צור קשר עכשיו</a>
+            <div class="container">
+                <h1>אירועי טריוויה מקצועיים עם יוסי קומר</h1>
+                <p>הפכו את האירוע הבא שלכם לחוויה בלתי נשכחת עם טריוויה מותאמת אישית</p>
+                <a href="contact.html" class="cta-button">צרו קשר עכשיו</a>
+            </div>
         </section>
 
         <section class="features">
-            <div class="feature">
-                <img src="IMG-20240827-WA0010.jpg" alt="טריוויה מגוונת" width="300" height="200">
-                <h3>תוכן מותאם אישית</h3>
-                <p>טריוויה וחידות בהתאמה אישית לחברה שלכם, כולל תכנים מקצועיים, היסטוריית החברה ועוד.</p>
+            <div class="container">
+                <h2>למה לבחור בקוויזמאסטר?</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <img src="IMG-20240827-WA0010.jpg" alt="טריוויה מגוונת" width="300" height="200">
+                        <h3>תוכן מותאם אישית</h3>
+                        <p>טריוויה וחידות בהתאמה אישית לחברה שלכם, כולל תכנים מקצועיים והיסטוריית החברה</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="IMG-20240827-WA0013.jpg" alt="אווירה כיפית" width="300" height="200">
+                        <h3>גיבוש צוות</h3>
+                        <p>חוויה מהנה ומגבשת שתחזק את הקשרים בין העובדים ותשפר את עבודת הצוות</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="IMG-20240827-WA0012.jpg" alt="מומחיות מקצועית" width="300" height="200">
+                        <h3>מומחיות מקצועית</h3>
+                        <p>ניסיון של עשרות שנים בתחום הטריוויה והמשחקים, עם מגוון רחב של פורמטים ונושאים</p>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <img src="IMG-20240827-WA0013.jpg" alt="אווירה כיפית" width="300" height="200">
-                <h3>גיבוש צוות</h3>
-                <p>חוויה מהנה ומגבשת שתחזק את הקשרים בין העובדים ותשפר את עבודת הצוות.</p>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <h2>מה הלקוחות אומרים</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial-item">
+                        <p>"האירוע היה מדהים! יוסי הצליח לרתק את כל העובדים ולגרום לכולם להשתתף ולהנות."</p>
+                        - חברת הייטק מובילה
+                    </div>
+                    <!-- Add more testimonial items here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>מוכנים להפוך את האירוע שלכם לבלתי נשכח?</h2>
+                <a href="contact.html" class="cta-button">צרו קשר עכשיו</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="container footer-content">
-            <p>© 2024 קוויזמאסטר. כל הזכויות שמורות.</p>
+        <div class="container">
+            <p>&copy; 2024 קוויזמאסטר. כל הזכויות שמורות.</p>
             <div class="social-icons">
                 <a href="#" aria-label="פייסבוק"><i class="fab fa-facebook"></i></a>
                 <a href="#" aria-label="טוויטר"><i class="fab fa-twitter"></i></a>
