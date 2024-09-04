@@ -1,19 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Hamburger menu functionality
+    // Normal navigation functionality
     const nav = document.querySelector('nav');
-    const hamburgerMenu = document.createElement('div');
-    hamburgerMenu.className = 'hamburger-menu';
-    
-    const hamburgerIcon = document.createElement('div');
-    hamburgerIcon.className = 'hamburger-icon';
-    for (let i = 0; i < 3; i++) {
-        const span = document.createElement('span');
-        hamburgerIcon.appendChild(span);
-    }
-    
     const menuItems = document.createElement('ul');
     menuItems.className = 'menu-items';
-    
+
     const menuLinks = [
         { href: 'index.html', text: 'דף הבית' },
         { href: 'about.html', text: 'אודות' },
@@ -29,30 +19,48 @@ document.addEventListener('DOMContentLoaded', function() {
         li.appendChild(a);
         menuItems.appendChild(li);
     });
+
+    nav.appendChild(menuItems);
+
+    // Hamburger menu functionality
+    const hamburgerMenu = document.createElement('div');
+    hamburgerMenu.className = 'hamburger-menu';
     
+    const hamburgerIcon = document.createElement('div');
+    hamburgerIcon.className = 'hamburger-icon';
+    for (let i = 0; i < 3; i++) {
+        const span = document.createElement('span');
+        hamburgerIcon.appendChild(span);
+    }
+
     hamburgerMenu.appendChild(hamburgerIcon);
-    hamburgerMenu.appendChild(menuItems);
     nav.appendChild(hamburgerMenu);
-    
+
+    // Toggle the menu on hamburger icon click
     hamburgerIcon.addEventListener('click', function() {
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     });
-    
+
+    // Hide the menu when clicking outside
     document.addEventListener('click', function(event) {
         if (!hamburgerMenu.contains(event.target) && menuItems.classList.contains('show')) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
         }
     });
-    
+
+    // Always show the normal navigation on the left on larger screens
     function checkScreenSize() {
         if (window.innerWidth > 768) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
+            menuItems.classList.remove('mobile-menu');
+        } else {
+            menuItems.classList.add('mobile-menu');
         }
     }
-    
+
     window.addEventListener('resize', checkScreenSize);
     checkScreenSize();
 

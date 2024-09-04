@@ -1,3 +1,5 @@
+
+/* Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
 
 :root {
@@ -30,7 +32,7 @@ body {
 
 /* Header and Navigation Styles */
 header {
-    background-image: linear-gradient(to right, #8e44ad, #e74c3c);
+    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
@@ -39,35 +41,36 @@ header {
 }
 
 .with-header-padding {
-  padding-top: 60px; /* Adjust this value based on your header height */
+    padding-top: 60px;
 }
 
 .with-header-padding main {
-  margin-top: 80px; /* Add some extra space between header and main content */
+    margin-top: 80px;
 }
 
-
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  order: 2; /* Move the logo to the right */
 }
 
 .logo img {
-    margin-left: 10px;
-    border-radius: 5px;
+  margin-right: 10px; /* Swap the margin from left to right */
+  border-radius: 5px;
 }
 
 /* Hamburger Menu Styles */
 .hamburger-menu {
     position: relative;
+    order: 2;
 }
 
 .hamburger-icon {
@@ -98,7 +101,7 @@ nav {
     text-decoration: none;
     color: #fff;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: background-color 0.3s ease;
     padding: 5px 10px;
     border-radius: 5px;
 }
@@ -107,92 +110,102 @@ nav {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.menu-items.show-on-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-items.show-on-mobile li {
+    margin-right: 0;
+    margin-bottom: 10px;
+}
 
 /* Features Section */
 .features {
-  padding: 80px 0;
+    padding: 80px 0;
 }
 
 .features h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
 }
 
 .feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 .feature-item {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .feature-item:hover {
-  transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .feature-item img {
-  max-width: 100%;
-  border-radius: 5px;
-  margin-bottom: 20px;
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 .feature-item h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
 }
 
 /* Testimonials Section */
 .testimonials {
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 20px 0;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 20px 0;
 }
 
 .testimonials h2 {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 50px;
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 50px;
 }
 
 .testimonial-slider {
-  max-width: 800px;
-  margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .testimonial-item {
-  text-align: center;
+    text-align: center;
 }
 
 .testimonial-item p {
-  font-size: 1.2rem;
-  font-style: italic;
-  margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 20px;
 }
 
 .testimonial-item cite {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 /* CTA Section */
 .cta {
-  background-color: var(--secondary-color);
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
 }
 
 .cta h2 {
-  font-size: 2.2rem;
-  margin-bottom: 30px;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
 }
 
 /* Hero Section */
@@ -260,36 +273,34 @@ nav {
     transform: translateY(-3px);
 }
 
-/* Ensure the layout is side-by-side */
-
+/* About Section */
 .about-content h1 {
-  text-align: center; /* Center-align the heading text */
-  margin-bottom: 30px; /* Add space below the heading */
-  font-size: xx-large;
-  color: #8e44ad;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    color: var(--primary-color);
 }
+
 .about-grid {
-  display: flex; /* Use Flexbox for side-by-side layout */
-  align-items: flex-start; /* Align items at the start of the container */
-  gap: 20px; /* Add some space between image and text */
-  padding: 40px; /* Add some padding around the container */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 40px;
 }
 
-/* Set a specific size for the image */
 .about-image img {
-  max-width: 300px; /* Adjust size as needed */
-  height: auto; /* Maintain the aspect ratio of the image */
-  border-radius: 8px; /* Optional: Add rounded corners */
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
 }
 
-/* Ensure the text is on the right and can grow */
 .about-text {
-  flex: 1; /* Allow the text container to grow and fill available space */
+    flex: 1;
+    text-align: right;
 }
 
-
-
-/* Responsive Design */
+/* Responsive Styles */
 @media (max-width: 768px) {
     .hamburger-icon {
         display: block;
@@ -334,5 +345,34 @@ nav {
 
     .social-icons {
         margin-top: 20px;
+    }
+
+    .about-content h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .about-grid {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .about-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .about-grid {
+        padding: 15px;
+    }
+
+    .about-text {
+        text-align: center;
     }
 }
