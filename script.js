@@ -65,13 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
     checkScreenSize();
     
     const slideshowContainer = document.querySelector('.slideshow-container');
-    const media = [
-        { type: 'video', src: '/C0051.mp4' },
-        { type: 'video', src: '/huyhappy.mp4' },
-        { type: 'video', src: '/closeyoossitama.mp4' },
-        { type: 'video', src: '/closuppage.mp4' },
-        { type: 'video', src: '/yossipointing.mp4' }
-    ];
+const media = [
+    { type: 'video', src: 'quizmaster.github.io/C0051.mp4' },
+    { type: 'video', src: 'quizmaster.github.io/huyhappy.mp4' },
+    { type: 'video', src: 'quizmaster.github.io/closeyoossitama.mp4' },
+    { type: 'video', src: 'quizmaster.github.io/closuppage.mp4' },
+    { type: 'video', src: 'quizmaster.github.io/yossipointing.mp4' }
+];
 
 let currentMediaIndex = 0;
 let mediaElements = [];
