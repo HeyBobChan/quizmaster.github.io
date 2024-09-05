@@ -69,8 +69,8 @@ const media = [
     { type: 'video', src: 'C0051.mp4' },
     { type: 'video', src: 'huyhappy.mp4' },
     { type: 'video', src: 'closeyoossitama.mp4' },
-    { type: 'video', src: 'closuppage.MP4' },
-    { type: 'video', src: 'yossipointing.MP4' }
+    { type: 'video', src: 'closuppage.mp4' },
+    { type: 'video', src: 'yossipointing.mp4' }
 ];
 
 let currentMediaIndex = 0;
