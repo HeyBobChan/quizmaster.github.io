@@ -63,58 +63,86 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('resize', checkScreenSize);
     checkScreenSize();
-
-    // Slideshow functionality
+    
     const slideshowContainer = document.querySelector('.slideshow-container');
-    const images = [
-        'IMG-20240827-WA0010.jpg',
-        'IMG-20240827-WA0013.jpg',
-        'IMG-20240827-WA0010.jpg',
-        'IMG-20240827-WA0012.jpg',
-        'IMG-20240827-WA0013.jpg'
-    ];
+const media = [
+    { type: 'video', src: 'C0051.mp4' },
+    { type: 'video', src: 'huyhappy.mp4' },
+    { type: 'video', src: 'closeyoossitama.mp4' },
+    { type: 'video', src: 'closuppage.MP4' },
+    { type: 'video', src: 'yossipointing.MP4' }
+];
 
-    let currentImageIndex = 0;
+let currentMediaIndex = 0;
+let mediaElements = [];
 
-    function preloadImages(imageArray, callback) {
-        let loadedImages = 0;
-        imageArray.forEach((imageSrc) => {
-            const img = new Image();
-            img.onload = () => {
-                loadedImages++;
-                if (loadedImages === imageArray.length) {
-                    callback();
-                }
-            };
-            img.src = imageSrc;
+function createMediaElement(item) {
+    let element = document.createElement('video');
+    element.src = item.src;
+    element.controls = false;
+    element.muted = true;
+    element.loop = false;
+    element.preload = 'none'; // Don't preload initially
+    element.style.opacity = '0';
+    element.style.display = 'none';
+    slideshowContainer.appendChild(element);
+    return element;
+}
+
+function loadVideo(index) {
+    const video = mediaElements[index];
+    if (video.preload !== 'auto') {
+        video.preload = 'auto';
+        return new Promise((resolve, reject) => {
+            video.oncanplaythrough = resolve;
+            video.onerror = reject;
+            video.load();
         });
     }
+    return Promise.resolve();
+}
 
-    function createImageElement(src) {
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.opacity = '0';
-        slideshowContainer.appendChild(img);
-        return img;
+async function showNextMedia() {
+    const currentMedia = mediaElements[currentMediaIndex];
+    currentMedia.style.opacity = '0';
+    currentMedia.style.display = 'none';
+    currentMedia.pause();
+    currentMedia.currentTime = 0;
+
+    currentMediaIndex = (currentMediaIndex + 1) % media.length;
+    const nextMedia = mediaElements[currentMediaIndex];
+
+    try {
+        await loadVideo(currentMediaIndex);
+        nextMedia.style.opacity = '1';
+        nextMedia.style.display = 'block';
+        await nextMedia.play();
+        console.log(`Playing video: ${nextMedia.src}`);
+
+        // Start loading the next video
+        const nextIndex = (currentMediaIndex + 1) % media.length;
+        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e}`));
+    } catch (e) {
+        console.error(`Error playing video ${nextMedia.src}:`, e);
+        showNextMedia(); // Skip to next video if there's an error
     }
 
-    function showNextImage() {
-        const currentImage = slideshowContainer.children[currentImageIndex];
-        currentImage.style.opacity = '0';
+    nextMedia.onended = showNextMedia;
+}
 
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-        const nextImage = slideshowContainer.children[currentImageIndex];
-        nextImage.style.opacity = '1';
+// Create all media elements
+mediaElements = media.map(createMediaElement);
 
-        const minDelay = 2000;
-        const maxDelay = 7000;
-        const randomDelay = Math.floor(Math.random() * (maxDelay - minDelay + 1) + minDelay);
-
-        setTimeout(showNextImage, randomDelay);
+// Start the slideshow
+async function initSlideshow() {
+    try {
+        await loadVideo(0); // Preload the first video
+        showNextMedia();
+    } catch (e) {
+        console.error("Error initializing slideshow:", e);
     }
+}
 
-    preloadImages(images, () => {
-        images.forEach(createImageElement);
-        showNextImage();
-    });
+initSlideshow();
+    
 });
