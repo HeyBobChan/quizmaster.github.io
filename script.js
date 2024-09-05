@@ -65,13 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
     checkScreenSize();
     
     const slideshowContainer = document.querySelector('.slideshow-container');
-const media = [
-    { type: 'video', src: 'C0051.mp4' },
-    { type: 'video', src: 'huyhappy.mp4' },
-    { type: 'video', src: 'closeyoossitama.mp4' },
-    { type: 'video', src: 'closuppage.mp4' },
-    { type: 'video', src: 'yossipointing.mp4' }
-];
+    const media = [
+        { type: 'video', src: '/C0051.mp4' },
+        { type: 'video', src: '/huyhappy.mp4' },
+        { type: 'video', src: '/closeyoossitama.mp4' },
+        { type: 'video', src: '/closuppage.mp4' },
+        { type: 'video', src: '/yossipointing.mp4' }
+    ];
 
 let currentMediaIndex = 0;
 let mediaElements = [];
@@ -153,22 +153,25 @@ function isGitHubPages() {
 }
 
 // Modify initSlideshow to include GitHub Pages specific logic
-async function initSlideshow() {
-    if (isGitHubPages()) {
-        console.log("Running on GitHub Pages. Ensuring videos are served correctly...");
-        // You might add GitHub Pages specific logic here if needed
+    async function initSlideshow() {
+        if (isGitHubPages()) {
+            console.log("Running on GitHub Pages. Ensuring videos are served correctly...");
+            // Update video sources for GitHub Pages
+            media.forEach(item => {
+                item.src = `/quizmaster.github.io${item.src}`;
+            });
+        }
+        
+        try {
+            await loadVideo(0); // Preload the first video
+            showNextMedia();
+        } catch (e) {
+            console.error("Error initializing slideshow:", e.message);
+            // Fallback: display an error message in the slideshow container
+            slideshowContainer.innerHTML = `<p>Error loading slideshow. Please check the console for more information.</p>`;
+        }
     }
-    
-    try {
-        await loadVideo(0); // Preload the first video
-        showNextMedia();
-    } catch (e) {
-        console.error("Error initializing slideshow:", e.message);
-        // Fallback: display an error message in the slideshow container
-        slideshowContainer.innerHTML = `<p>Error loading slideshow. Please check the console for more information.</p>`;
-    }
-}
 
-initSlideshow();
+    initSlideshow();
     
 });
