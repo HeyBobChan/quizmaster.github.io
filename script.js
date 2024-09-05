@@ -65,16 +65,18 @@ document.addEventListener('DOMContentLoaded', function() {
     checkScreenSize();
     
     const slideshowContainer = document.querySelector('.slideshow-container');
-const media = [
-    { type: 'video', src: 'C0051.mp4' },
-    { type: 'video', src: 'qhuyhappy.mp4' },
-    { type: 'video', src: 'closeyoossitama.mp4' },
-    { type: 'video', src: 'closuppage.mp4' },
-    { type: 'video', src: 'yossipointing.mp4' }
-];
+    const media = [
+        { type: 'video', src: 'yossipointing.MP4' },
+        { type: 'video', src: 'huyhappy.MP4' },
+        { type: 'video', src: 'C0052.MP4' },
+        { type: 'video', src: 'C0051.MP4' },
 
+        { type: 'image', src: 'C5862 (edited).mp4' }
+    ];
+    
 let currentMediaIndex = 0;
 let mediaElements = [];
+let preloadIndex = 0;
 
 function createMediaElement(item) {
     let element = document.createElement('video');
@@ -82,31 +84,25 @@ function createMediaElement(item) {
     element.controls = false;
     element.muted = true;
     element.loop = false;
-    element.preload = 'none';
+    element.preload = 'none'; // Don't preload all videos at once
     element.style.opacity = '0';
     element.style.display = 'none';
-    element.crossOrigin = 'anonymous';
+    element.crossOrigin = 'anonymous'; // Add this line to handle CORS
     slideshowContainer.appendChild(element);
     return element;
 }
 
-function loadVideo(index) {
-    const video = mediaElements[index];
-    if (video.preload !== 'auto') {
-        video.preload = 'auto';
-        return new Promise((resolve, reject) => {
-            video.oncanplaythrough = resolve;
-            video.onerror = (e) => {
-                console.error(`Error loading video ${video.src}:`, e);
-                reject(new Error(`Video load error: ${video.src} - ${e.type}`));
-            };
-            video.load();
-        });
+function preloadNextVideo() {
+    const nextIndex = (preloadIndex + 1) % media.length;
+    const nextVideo = mediaElements[nextIndex];
+    if (nextVideo.preload !== 'auto') {
+        nextVideo.preload = 'auto';
+        nextVideo.load();
     }
-    return Promise.resolve();
+    preloadIndex = nextIndex;
 }
 
-async function showNextMedia() {
+function showNextMedia() {
     const currentMedia = mediaElements[currentMediaIndex];
     currentMedia.style.opacity = '0';
     currentMedia.style.display = 'none';
@@ -115,21 +111,16 @@ async function showNextMedia() {
 
     currentMediaIndex = (currentMediaIndex + 1) % media.length;
     const nextMedia = mediaElements[currentMediaIndex];
+    nextMedia.style.opacity = '1';
+    nextMedia.style.display = 'block';
 
-    try {
-        await loadVideo(currentMediaIndex);
-        nextMedia.style.opacity = '1';
-        nextMedia.style.display = 'block';
-        await nextMedia.play();
+    nextMedia.play().then(() => {
         console.log(`Playing video: ${nextMedia.src}`);
-
-        // Start loading the next video
-        const nextIndex = (currentMediaIndex + 1) % media.length;
-        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e.message}`));
-    } catch (e) {
-        console.error(`Error playing video ${nextMedia.src}:`, e.message);
+        preloadNextVideo(); // Preload the next video while current one is playing
+    }).catch(e => {
+        console.error(`Error playing video ${nextMedia.src}:`, e);
         showNextMedia(); // Skip to next video if there's an error
-    }
+    });
 
     nextMedia.onended = showNextMedia;
 }
@@ -137,41 +128,13 @@ async function showNextMedia() {
 // Create all media elements
 mediaElements = media.map(createMediaElement);
 
+// Preload the first two videos
+mediaElements[0].preload = 'auto';
+mediaElements[0].load();
+mediaElements[1].preload = 'auto';
+mediaElements[1].load();
+
 // Start the slideshow
-async function initSlideshow() {
-    try {
-        await loadVideo(0); // Preload the first video
-        showNextMedia();
-    } catch (e) {
-        console.error("Error initializing slideshow:", e.message);
-    }
-}
-
-// Add this function to check if we're running on GitHub Pages
-function isGitHubPages() {
-    return window.location.hostname.includes('github.io');
-}
-
-// Modify initSlideshow to include GitHub Pages specific logic
-    async function initSlideshow() {
-        if (isGitHubPages()) {
-            console.log("Running on GitHub Pages. Ensuring videos are served correctly...");
-            // Update video sources for GitHub Pages
-            media.forEach(item => {
-                item.src = `/quizmaster.github.io${item.src}`;
-            });
-        }
-        
-        try {
-            await loadVideo(0); // Preload the first video
-            showNextMedia();
-        } catch (e) {
-            console.error("Error initializing slideshow:", e.message);
-            // Fallback: display an error message in the slideshow container
-            slideshowContainer.innerHTML = `<p>Error loading slideshow. Please check the console for more information.</p>`;
-        }
-    }
-
-    initSlideshow();
+showNextMedia();
     
 });
