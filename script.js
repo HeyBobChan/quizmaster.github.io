@@ -82,9 +82,10 @@ function createMediaElement(item) {
     element.controls = false;
     element.muted = true;
     element.loop = false;
-    element.preload = 'none'; // Don't preload initially
+    element.preload = 'none';
     element.style.opacity = '0';
     element.style.display = 'none';
+    element.crossOrigin = 'anonymous';
     slideshowContainer.appendChild(element);
     return element;
 }
@@ -95,7 +96,10 @@ function loadVideo(index) {
         video.preload = 'auto';
         return new Promise((resolve, reject) => {
             video.oncanplaythrough = resolve;
-            video.onerror = reject;
+            video.onerror = (e) => {
+                console.error(`Error loading video ${video.src}:`, e);
+                reject(new Error(`Video load error: ${video.src} - ${e.type}`));
+            };
             video.load();
         });
     }
@@ -121,9 +125,9 @@ async function showNextMedia() {
 
         // Start loading the next video
         const nextIndex = (currentMediaIndex + 1) % media.length;
-        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e}`));
+        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e.message}`));
     } catch (e) {
-        console.error(`Error playing video ${nextMedia.src}:`, e);
+        console.error(`Error playing video ${nextMedia.src}:`, e.message);
         showNextMedia(); // Skip to next video if there's an error
     }
 
@@ -139,7 +143,29 @@ async function initSlideshow() {
         await loadVideo(0); // Preload the first video
         showNextMedia();
     } catch (e) {
-        console.error("Error initializing slideshow:", e);
+        console.error("Error initializing slideshow:", e.message);
+    }
+}
+
+// Add this function to check if we're running on GitHub Pages
+function isGitHubPages() {
+    return window.location.hostname.includes('github.io');
+}
+
+// Modify initSlideshow to include GitHub Pages specific logic
+async function initSlideshow() {
+    if (isGitHubPages()) {
+        console.log("Running on GitHub Pages. Ensuring videos are served correctly...");
+        // You might add GitHub Pages specific logic here if needed
+    }
+    
+    try {
+        await loadVideo(0); // Preload the first video
+        showNextMedia();
+    } catch (e) {
+        console.error("Error initializing slideshow:", e.message);
+        // Fallback: display an error message in the slideshow container
+        slideshowContainer.innerHTML = `<p>Error loading slideshow. Please check the console for more information.</p>`;
     }
 }
 
