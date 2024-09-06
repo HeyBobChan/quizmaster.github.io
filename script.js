@@ -64,100 +64,84 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', checkScreenSize);
     checkScreenSize();
     
-    document.addEventListener('DOMContentLoaded', function() {
-        const slideshowContainer = document.querySelector('.slideshow-container');
-        const media = [
-            { type: 'video', src: 'yossipointing.mp4', poster: 'yossipointing-poster.jpg' },
-            { type: 'video', src: 'C0052 (edited).mp4', poster: 'C0052-poster.jpg' },
-            { type: 'video', src: 'C0051 (edited) (1).mp4', poster: 'C0051-poster.jpg' },
-            { type: 'image', src: 'C5862 (edited).jpg' },
-            { type: 'image', src: 'huyhappy.jpg' }
-        ];
-    
-        let currentMediaIndex = 0;
-        let mediaElements = [];
-    
-        function createMediaElement(item) {
-            let element;
-            if (item.type === 'video') {
-                element = document.createElement('video');
-                element.src = item.src;
-                element.poster = item.poster;
-                element.muted = true;
-                element.playsInline = true;
-                element.preload = 'metadata';
-                element.addEventListener('loadedmetadata', () => {
-                    console.log(`Metadata loaded for ${item.src}`);
-                });
-                element.addEventListener('error', (e) => {
-                    console.error(`Error loading video ${item.src}:`, e);
-                    showNextMedia(); // Skip to next on error
-                });
-            } else {
-                element = document.createElement('img');
-                element.src = item.src;
-                element.alt = 'Slideshow image';
-            }
-            element.style.opacity = '0';
-            element.style.display = 'none';
-            slideshowContainer.appendChild(element);
-            return element;
-        }
-    
-        async function showNextMedia() {
-            const currentMedia = mediaElements[currentMediaIndex];
-            currentMedia.style.opacity = '0';
-            currentMedia.style.display = 'none';
-            if (currentMedia.tagName === 'VIDEO') {
-                currentMedia.pause();
-                currentMedia.currentTime = 0;
-            }
-    
-            currentMediaIndex = (currentMediaIndex + 1) % media.length;
-            const nextMedia = mediaElements[currentMediaIndex];
-    
-            nextMedia.style.opacity = '1';
-            nextMedia.style.display = 'block';
-    
-            if (nextMedia.tagName === 'VIDEO') {
-                try {
-                    await nextMedia.play();
-                    console.log(`Playing video: ${nextMedia.src}`);
-                    nextMedia.onended = showNextMedia;
-                } catch (e) {
-                    console.error(`Error playing video ${nextMedia.src}:`, e);
-                    setTimeout(showNextMedia, 1000); // Try next media after a short delay
-                }
-            } else {
-                // For images, move to next slide after a fixed duration
-                setTimeout(showNextMedia, 5000);
-            }
-        }
-    
-        // Create all media elements
-        mediaElements = media.map(createMediaElement);
-    
-        // Preload the first few videos
-        mediaElements.slice(0, 3).forEach(element => {
-            if (element.tagName === 'VIDEO') {
-                element.load();
-            }
-        });
-    
-        function initSlideshow() {
-            mediaElements[0].style.opacity = '1';
-            mediaElements[0].style.display = 'block';
-            if (mediaElements[0].tagName === 'VIDEO') {
-                mediaElements[0].play().catch(e => {
-                    console.error('Error playing first video:', e);
-                    showNextMedia();
-                });
-            } else {
-                setTimeout(showNextMedia, 5000);
-            }
-        }
-    
-        initSlideshow();
-    });
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    const media = [
+        { type: 'video', src: 'yossipointing.mp4' },
+        { type: 'video', src: 'C0052 (edited).mp4' },
+        { type: 'video', src: 'C0051 (edited) (1).mp4' },
+        { type: 'image', src: 'C5862 (edited).mp4' },
+        { type: 'image', src: 'huyhappy.mp4' }
+    ];
+  
+let currentMediaIndex = 0;
+let mediaElements = [];
 
+function createMediaElement(item) {
+    let element = document.createElement('video');
+    element.src = item.src;
+    element.controls = false;
+    element.muted = true;
+    element.loop = false;
+    element.preload = 'none'; // Don't preload initially
+    element.style.opacity = '0';
+    element.style.display = 'none';
+    slideshowContainer.appendChild(element);
+    return element;
+}
+
+function loadVideo(index) {
+    const video = mediaElements[index];
+    if (video.preload !== 'auto') {
+        video.preload = 'auto';
+        return new Promise((resolve, reject) => {
+            video.oncanplaythrough = resolve;
+            video.onerror = reject;
+            video.load();
+        });
+    }
+    return Promise.resolve();
+}
+
+async function showNextMedia() {
+    const currentMedia = mediaElements[currentMediaIndex];
+    currentMedia.style.opacity = '0';
+    currentMedia.style.display = 'none';
+    currentMedia.pause();
+    currentMedia.currentTime = 0;
+
+    currentMediaIndex = (currentMediaIndex + 1) % media.length;
+    const nextMedia = mediaElements[currentMediaIndex];
+
+    try {
+        await loadVideo(currentMediaIndex);
+        nextMedia.style.opacity = '1';
+        nextMedia.style.display = 'block';
+        await nextMedia.play();
+        console.log(`Playing video: ${nextMedia.src}`);
+
+        // Start loading the next video
+        const nextIndex = (currentMediaIndex + 1) % media.length;
+        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e}`));
+    } catch (e) {
+        console.error(`Error playing video ${nextMedia.src}:`, e);
+        showNextMedia(); // Skip to next video if there's an error
+    }
+
+    nextMedia.onended = showNextMedia;
+}
+
+// Create all media elements
+mediaElements = media.map(createMediaElement);
+
+// Start the slideshow
+async function initSlideshow() {
+    try {
+        await loadVideo(0); // Preload the first video
+        showNextMedia();
+    } catch (e) {
+        console.error("Error initializing slideshow:", e);
+    }
+}
+
+initSlideshow();
 })
