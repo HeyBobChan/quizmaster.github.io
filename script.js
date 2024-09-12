@@ -1,71 +1,49 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation functionality
     const nav = document.querySelector('nav');
-    const menuItems = document.createElement('ul');
-    menuItems.className = 'menu-items';
-
-    const menuLinks = [
-        { href: 'index.html', text: 'דף הבית' },
-        { href: 'about.html', text: 'אודות' },
-        { href: 'services.html', text: 'שירותים' },
-        { href: 'contact.html', text: 'צור קשר' }
-    ];
-
-    menuLinks.forEach(link => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = link.href;
-        a.textContent = link.text;
-        li.appendChild(a);
-        menuItems.appendChild(li);
-    });
-
-    nav.appendChild(menuItems);
-
-    // Hamburger menu functionality
-    const hamburgerMenu = document.createElement('div');
-    hamburgerMenu.className = 'hamburger-menu';
-    
-    const hamburgerIcon = document.createElement('div');
-    hamburgerIcon.className = 'hamburger-icon';
-    for (let i = 0; i < 3; i++) {
-        const span = document.createElement('span');
-        hamburgerIcon.appendChild(span);
-    }
-
-    hamburgerMenu.appendChild(hamburgerIcon);
-    nav.appendChild(hamburgerMenu);
+    const menuItems = nav.querySelector('.menu-items');
+    const hamburgerMenu = nav.querySelector('.hamburger-menu');
+    const hamburgerIcon = hamburgerMenu.querySelector('.hamburger-icon');
 
     function toggleMenu() {
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     }
 
-    hamburgerIcon.addEventListener('click', function(event) {
-        event.stopPropagation();
-        toggleMenu();
-    });
+    function closeMenu() {
+        menuItems.classList.remove('show');
+        hamburgerIcon.classList.remove('active');
+    }
 
-    document.addEventListener('click', function(event) {
-        if (!nav.contains(event.target) && menuItems.classList.contains('show')) {
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    hamburgerIcon.addEventListener('click', function(event) {
+        if (isMobile()) {
+            event.stopPropagation();
             toggleMenu();
         }
     });
 
-    function checkScreenSize() {
-        if (window.innerWidth > 768) {
+    document.addEventListener('click', function(event) {
+        if (isMobile() && !nav.contains(event.target) && menuItems.classList.contains('show')) {
+            closeMenu();
+        }
+    });
+
+    function handleScreenSize() {
+        if (isMobile()) {
             menuItems.classList.remove('show');
-            hamburgerIcon.classList.remove('active');
-            menuItems.style.display = 'flex';
+            hamburgerIcon.style.display = 'block';
         } else {
-            menuItems.style.display = 'none';
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
+            hamburgerIcon.style.display = 'none';
         }
     }
 
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize(); // Call this immediately to set the initial state
+    window.addEventListener('resize', handleScreenSize);
+    handleScreenSize(); // Call this immediately to set the initial state
 
     // Video slideshow functionality
     const slideshowContainer = document.querySelector('.slideshow-container');
