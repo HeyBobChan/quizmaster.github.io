@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Normal navigation functionality
+    // Navigation functionality
     const nav = document.querySelector('nav');
     const menuItems = document.createElement('ul');
     menuItems.className = 'menu-items';
@@ -36,112 +36,85 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.appendChild(hamburgerIcon);
     nav.appendChild(hamburgerMenu);
 
-    // Toggle the menu on hamburger icon click
     hamburgerIcon.addEventListener('click', function() {
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     });
 
-    // Hide the menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!hamburgerMenu.contains(event.target) && menuItems.classList.contains('show')) {
+        if (!hamburgerMenu.contains(event.target) && !menuItems.contains(event.target)) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
         }
     });
 
-    // Always show the normal navigation on the left on larger screens
     function checkScreenSize() {
         if (window.innerWidth > 768) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
-            menuItems.classList.remove('mobile-menu');
+            menuItems.classList.remove('show-on-mobile');
         } else {
-            menuItems.classList.add('mobile-menu');
+            menuItems.classList.add('show-on-mobile');
         }
     }
 
     window.addEventListener('resize', checkScreenSize);
     checkScreenSize();
-    
+
+    // Video slideshow functionality
     const slideshowContainer = document.querySelector('.slideshow-container');
     const media = [
         { type: 'video', src: 'yossipointing.mp4' },
         { type: 'video', src: 'C0052 (edited).mp4' },
         { type: 'video', src: 'C0051 (edited) (1).mp4' },
-        { type: 'image', src: 'C5862 (edited).mp4' },
-        { type: 'image', src: 'huyhappy.mp4' }
+        { type: 'video', src: 'C5862 (edited).mp4' },
+        { type: 'video', src: 'huyhappy.mp4' }
     ];
-  
-let currentMediaIndex = 0;
-let mediaElements = [];
 
-function createMediaElement(item) {
-    let element = document.createElement('video');
-    element.src = item.src;
-    element.controls = false;
-    element.muted = true;
-    element.loop = false;
-    element.preload = 'none'; // Don't preload initially
-    element.style.opacity = '0';
-    element.style.display = 'none';
-    slideshowContainer.appendChild(element);
-    return element;
-}
+    let currentMediaIndex = 0;
+    let mediaElements = [];
 
-function loadVideo(index) {
-    const video = mediaElements[index];
-    if (video.preload !== 'auto') {
-        video.preload = 'auto';
-        return new Promise((resolve, reject) => {
-            video.oncanplaythrough = resolve;
-            video.onerror = reject;
-            video.load();
-        });
-    }
-    return Promise.resolve();
-}
-
-async function showNextMedia() {
-    const currentMedia = mediaElements[currentMediaIndex];
-    currentMedia.style.opacity = '0';
-    currentMedia.style.display = 'none';
-    currentMedia.pause();
-    currentMedia.currentTime = 0;
-
-    currentMediaIndex = (currentMediaIndex + 1) % media.length;
-    const nextMedia = mediaElements[currentMediaIndex];
-
-    try {
-        await loadVideo(currentMediaIndex);
-        nextMedia.style.opacity = '1';
-        nextMedia.style.display = 'block';
-        await nextMedia.play();
-        console.log(`Playing video: ${nextMedia.src}`);
-
-        // Start loading the next video
-        const nextIndex = (currentMediaIndex + 1) % media.length;
-        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e}`));
-    } catch (e) {
-        console.error(`Error playing video ${nextMedia.src}:`, e);
-        showNextMedia(); // Skip to next video if there's an error
+    function createMediaElement(item) {
+        let element;
+        if (item.type === 'video') {
+            element = document.createElement('video');
+            element.muted = true;
+            element.loop = false;
+        } else {
+            element = document.createElement('img');
+        }
+        element.src = item.src;
+        element.style.opacity = '0';
+        slideshowContainer.appendChild(element);
+        return element;
     }
 
-    nextMedia.onended = showNextMedia;
-}
+    function showNextMedia() {
+        mediaElements[currentMediaIndex].style.opacity = '0';
+        if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
+            mediaElements[currentMediaIndex].pause();
+        }
 
-// Create all media elements
-mediaElements = media.map(createMediaElement);
+        currentMediaIndex = (currentMediaIndex + 1) % media.length;
+        mediaElements[currentMediaIndex].style.opacity = '1';
 
-// Start the slideshow
-async function initSlideshow() {
-    try {
-        await loadVideo(0); // Preload the first video
-        showNextMedia();
-    } catch (e) {
-        console.error("Error initializing slideshow:", e);
+        if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
+            mediaElements[currentMediaIndex].currentTime = 0;
+            mediaElements[currentMediaIndex].play().catch(e => console.error("Error playing video:", e));
+        }
     }
-}
 
-initSlideshow();
-})
+    // Create all media elements
+    mediaElements = media.map(createMediaElement);
+
+    // Start the slideshow
+    mediaElements[0].style.opacity = '1';
+    if (mediaElements[0].tagName === 'VIDEO') {
+        mediaElements[0].play().catch(e => console.error("Error playing initial video:", e));
+    }
+
+    setInterval(showNextMedia, 5000); // Change media every 5 seconds
+
+    // Add header padding to body
+    document.body.classList.add('with-header-padding');
+});
