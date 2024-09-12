@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation functionality
+    // Normal navigation functionality
     const nav = document.querySelector('nav');
     const menuItems = document.createElement('ul');
     menuItems.className = 'menu-items';
@@ -36,26 +36,28 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.appendChild(hamburgerIcon);
     nav.appendChild(hamburgerMenu);
 
-    hamburgerIcon.addEventListener('click', function(event) {
-        event.stopPropagation();
+    // Toggle the menu on hamburger icon click
+    hamburgerIcon.addEventListener('click', function() {
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     });
 
+    // Hide the menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!hamburgerMenu.contains(event.target) && !menuItems.contains(event.target)) {
+        if (!hamburgerMenu.contains(event.target) && menuItems.classList.contains('show')) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
         }
     });
 
+    // Always show the normal navigation on the left on larger screens
     function checkScreenSize() {
         if (window.innerWidth > 768) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
-            menuItems.classList.remove('show-on-mobile');
+            menuItems.classList.remove('mobile-menu');
         } else {
-            menuItems.classList.add('show-on-mobile');
+            menuItems.classList.add('mobile-menu');
         }
     }
 
@@ -85,19 +87,19 @@ document.addEventListener('DOMContentLoaded', function() {
             element = document.createElement('img');
         }
         element.src = item.src;
-        element.style.display = 'none';
+        element.style.opacity = '0';
         slideshowContainer.appendChild(element);
         return element;
     }
 
     function showNextMedia() {
-        mediaElements[currentMediaIndex].style.display = 'none';
+        mediaElements[currentMediaIndex].style.opacity = '0';
         if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
             mediaElements[currentMediaIndex].pause();
         }
 
         currentMediaIndex = (currentMediaIndex + 1) % media.length;
-        mediaElements[currentMediaIndex].style.display = 'block';
+        mediaElements[currentMediaIndex].style.opacity = '1';
 
         if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
             mediaElements[currentMediaIndex].currentTime = 0;
@@ -109,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mediaElements = media.map(createMediaElement);
 
     // Start the slideshow
-    mediaElements[0].style.display = 'block';
+    mediaElements[0].style.opacity = '1';
     if (mediaElements[0].tagName === 'VIDEO') {
         mediaElements[0].play().catch(e => console.error("Error playing initial video:", e));
     }
@@ -119,3 +121,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add header padding to body
     document.body.classList.add('with-header-padding');
 });
+
+                          
