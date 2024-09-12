@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Normal navigation functionality
+    // Navigation functionality
     const nav = document.querySelector('nav');
     const menuItems = document.createElement('ul');
     menuItems.className = 'menu-items';
@@ -36,33 +36,32 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.appendChild(hamburgerIcon);
     nav.appendChild(hamburgerMenu);
 
-    // Toggle the menu on hamburger icon click
-    hamburgerIcon.addEventListener('click', function() {
+    hamburgerIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent this click from immediately triggering the document click handler
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     });
 
-    // Hide the menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!hamburgerMenu.contains(event.target) && menuItems.classList.contains('show')) {
+        if (!hamburgerMenu.contains(event.target) && !menuItems.contains(event.target)) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
         }
     });
 
-    // Always show the normal navigation on the left on larger screens
     function checkScreenSize() {
         if (window.innerWidth > 768) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
-            menuItems.classList.remove('mobile-menu');
+            menuItems.classList.remove('show-on-mobile');
         } else {
-            menuItems.classList.add('mobile-menu');
+            menuItems.classList.add('show-on-mobile');
+            menuItems.classList.remove('show'); // Ensure menu is closed on mobile by default
         }
     }
 
     window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
+    checkScreenSize(); // Call this immediately to set the initial state
 
     // Video slideshow functionality
     const slideshowContainer = document.querySelector('.slideshow-container');
@@ -121,5 +120,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add header padding to body
     document.body.classList.add('with-header-padding');
 });
-
-                          
