@@ -36,16 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.appendChild(hamburgerIcon);
     nav.appendChild(hamburgerMenu);
 
-    hamburgerIcon.addEventListener('click', function(event) {
-        event.stopPropagation(); // Prevent this click from immediately triggering the document click handler
+    function toggleMenu() {
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
+    }
+
+    hamburgerIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
+        toggleMenu();
     });
 
     document.addEventListener('click', function(event) {
-        if (!hamburgerMenu.contains(event.target) && !menuItems.contains(event.target)) {
-            menuItems.classList.remove('show');
-            hamburgerIcon.classList.remove('active');
+        if (!nav.contains(event.target) && menuItems.classList.contains('show')) {
+            toggleMenu();
         }
     });
 
@@ -53,10 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.innerWidth > 768) {
             menuItems.classList.remove('show');
             hamburgerIcon.classList.remove('active');
-            menuItems.classList.remove('show-on-mobile');
+            menuItems.style.display = 'flex';
         } else {
-            menuItems.classList.add('show-on-mobile');
-            menuItems.classList.remove('show'); // Ensure menu is closed on mobile by default
+            menuItems.style.display = 'none';
+            menuItems.classList.remove('show');
+            hamburgerIcon.classList.remove('active');
         }
     }
 
