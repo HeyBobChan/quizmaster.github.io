@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.appendChild(hamburgerIcon);
     nav.appendChild(hamburgerMenu);
 
-    hamburgerIcon.addEventListener('click', function() {
+    hamburgerIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
         menuItems.classList.toggle('show');
         hamburgerIcon.classList.toggle('active');
     });
@@ -84,19 +85,19 @@ document.addEventListener('DOMContentLoaded', function() {
             element = document.createElement('img');
         }
         element.src = item.src;
-        element.style.opacity = '0';
+        element.style.display = 'none';
         slideshowContainer.appendChild(element);
         return element;
     }
 
     function showNextMedia() {
-        mediaElements[currentMediaIndex].style.opacity = '0';
+        mediaElements[currentMediaIndex].style.display = 'none';
         if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
             mediaElements[currentMediaIndex].pause();
         }
 
         currentMediaIndex = (currentMediaIndex + 1) % media.length;
-        mediaElements[currentMediaIndex].style.opacity = '1';
+        mediaElements[currentMediaIndex].style.display = 'block';
 
         if (mediaElements[currentMediaIndex].tagName === 'VIDEO') {
             mediaElements[currentMediaIndex].currentTime = 0;
@@ -108,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mediaElements = media.map(createMediaElement);
 
     // Start the slideshow
-    mediaElements[0].style.opacity = '1';
+    mediaElements[0].style.display = 'block';
     if (mediaElements[0].tagName === 'VIDEO') {
         mediaElements[0].play().catch(e => console.error("Error playing initial video:", e));
     }
