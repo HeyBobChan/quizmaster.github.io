@@ -61,17 +61,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ensure default cursor is hidden
     // Remove the line that hides the default cursor
-    // document.body.style.cursor = 'none';
+    // document.body.style.cursor = 'none'; 
 
     // Video slideshow for the main page
     if (document.querySelector('.hero')) {
         const slideshowContainer = document.querySelector('.slideshow-container');
         const media = [
             { type: 'video', src: 'yossipointing.mp4'},
-            { type: 'video', src: 'C5862 (edited) (1).mp4' },
-            { type: 'video', src: 'C0051 (edited) (1).mp4' },
-            { type: 'video', src: 'huyhappy.mp4' },
-            { type: 'video', src: 'C0052 (edited).mp4' }
+            { type: 'video', src: 'C0052.mp4'},
+            { type: 'video', src: 'C5862.mp4' },
+            { type: 'video', src: 'C0051.mp4' },
+            { type: 'video', src: 'huyhappy.mp4'}
+            
             
         ];
 
@@ -85,11 +86,15 @@ document.addEventListener('DOMContentLoaded', function() {
             element.muted = true;
             element.loop = false;
             element.preload = 'auto';
+            element.autoplay = true;
+            element.setAttribute('playsinline', '');
+            element.setAttribute('webkit-playsinline', '');
             element.style.opacity = '0';
             element.style.display = 'none';
             slideshowContainer.appendChild(element);
             return element;
         }
+        
 
         function showNextMedia() {
             const currentMedia = mediaElements[currentMediaIndex];
