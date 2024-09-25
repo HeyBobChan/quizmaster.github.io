@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Normal navigation functionality
+    // Navigation functionality
     const nav = document.querySelector('nav');
     const menuItems = document.createElement('ul');
     menuItems.className = 'menu-items';
@@ -23,9 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     nav.appendChild(menuItems);
 
     // Hamburger menu functionality
-    const hamburgerMenu = document.createElement('div');
-    hamburgerMenu.className = 'hamburger-menu';
-    
     const hamburgerIcon = document.createElement('div');
     hamburgerIcon.className = 'hamburger-icon';
     for (let i = 0; i < 3; i++) {
@@ -33,115 +30,94 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburgerIcon.appendChild(span);
     }
 
-    hamburgerMenu.appendChild(hamburgerIcon);
-    nav.appendChild(hamburgerMenu);
+    nav.appendChild(hamburgerIcon);
 
     // Toggle the menu on hamburger icon click
     hamburgerIcon.addEventListener('click', function() {
         menuItems.classList.toggle('show');
-        hamburgerIcon.classList.toggle('active');
     });
 
     // Hide the menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!hamburgerMenu.contains(event.target) && menuItems.classList.contains('show')) {
+        if (!nav.contains(event.target) && menuItems.classList.contains('show')) {
             menuItems.classList.remove('show');
-            hamburgerIcon.classList.remove('active');
         }
     });
 
-    // Always show the normal navigation on the left on larger screens
-    function checkScreenSize() {
-        if (window.innerWidth > 768) {
-            menuItems.classList.remove('show');
-            hamburgerIcon.classList.remove('active');
-            menuItems.classList.remove('mobile-menu');
-        } else {
-            menuItems.classList.add('mobile-menu');
+    // Custom Cursor Effect
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    document.addEventListener('mousemove', function(e) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    // Wiggle Effect
+    document.addEventListener('mousemove', function(e) {
+        cursor.style.transform = `translate(-50%, -50%) rotate(${Math.sin(e.clientX * 0.05) * 10}deg)`;
+    });
+
+    // Ensure default cursor is hidden
+    // Remove the line that hides the default cursor
+    // document.body.style.cursor = 'none';
+
+    // Video slideshow for the main page
+    if (document.querySelector('.hero')) {
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        const media = [
+            { type: 'video', src: 'yossipointing.mp4' },
+            { type: 'video', src: 'C0052 (edited).mp4' },
+            { type: 'video', src: 'C5862 (edited).mp4' },
+            { type: 'video', src: 'huyhappy.mp4' }
+        ];
+
+        let currentMediaIndex = 0;
+        let mediaElements = [];
+
+        function createMediaElement(item) {
+            let element = document.createElement('video');
+            element.src = item.src;
+            element.controls = false;
+            element.muted = true;
+            element.loop = false;
+            element.preload = 'auto';
+            element.style.opacity = '0';
+            element.style.display = 'none';
+            slideshowContainer.appendChild(element);
+            return element;
         }
+
+        function showNextMedia() {
+            const currentMedia = mediaElements[currentMediaIndex];
+            currentMedia.style.opacity = '0';
+            currentMedia.style.display = 'none';
+            currentMedia.pause();
+            currentMedia.currentTime = 0;
+
+            currentMediaIndex = (currentMediaIndex + 1) % media.length;
+            const nextMedia = mediaElements[currentMediaIndex];
+
+            nextMedia.style.opacity = '1';
+            nextMedia.style.display = 'block';
+            nextMedia.play();
+
+            nextMedia.onended = showNextMedia;
+        }
+
+        // Create all media elements
+        mediaElements = media.map(createMediaElement);
+
+        // Start the slideshow
+        function initSlideshow() {
+            const firstMedia = mediaElements[currentMediaIndex];
+            firstMedia.style.opacity = '1';
+            firstMedia.style.display = 'block';
+            firstMedia.play();
+            firstMedia.onended = showNextMedia;
+        }
+
+        initSlideshow();
     }
-
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
-    
-    const slideshowContainer = document.querySelector('.slideshow-container');
-    const media = [
-        { type: 'video', src: 'yossipointing.mp4' },
-        { type: 'video', src: 'C0052 (edited).mp4' },
-        { type: 'video', src: 'C0051 (edited) (1).mp4' },
-        { type: 'video', src: 'C5862 (edited).mp4' },
-        { type: 'video', src: 'huyhappy.mp4' }
-    ];
-  
-let currentMediaIndex = 0;
-let mediaElements = [];
-
-function createMediaElement(item) {
-    let element = document.createElement('video');
-    element.src = item.src;
-    element.controls = false;
-    element.muted = true;
-    element.loop = false;
-    element.preload = 'none'; // Don't preload initially
-    element.style.opacity = '0';
-    element.style.display = 'none';
-    slideshowContainer.appendChild(element);
-    return element;
-}
-
-function loadVideo(index) {
-    const video = mediaElements[index];
-    if (video.preload !== 'auto') {
-        video.preload = 'auto';
-        return new Promise((resolve, reject) => {
-            video.oncanplaythrough = resolve;
-            video.onerror = reject;
-            video.load();
-        });
-    }
-    return Promise.resolve();
-}
-
-async function showNextMedia() {
-    const currentMedia = mediaElements[currentMediaIndex];
-    currentMedia.style.opacity = '0';
-    currentMedia.style.display = 'none';
-    currentMedia.pause();
-    currentMedia.currentTime = 0;
-
-    currentMediaIndex = (currentMediaIndex + 1) % media.length;
-    const nextMedia = mediaElements[currentMediaIndex];
-
-    try {
-        await loadVideo(currentMediaIndex);
-        nextMedia.style.opacity = '1';
-        nextMedia.style.display = 'block';
-        await nextMedia.play();
-        console.log(`Playing video: ${nextMedia.src}`);
-
-        // Start loading the next video
-        const nextIndex = (currentMediaIndex + 1) % media.length;
-        loadVideo(nextIndex).catch(e => console.error(`Error preloading next video: ${e}`));
-    } catch (e) {
-        console.error(`Error playing video ${nextMedia.src}:`, e);
-        showNextMedia(); // Skip to next video if there's an error
-    }
-
-    nextMedia.onended = showNextMedia;
-}
-
-// Create all media elements
-mediaElements = media.map(createMediaElement);
-
-// Start the slideshow
-async function initSlideshow() {
-    try {
-        await loadVideo(0); // Preload the first video
-        showNextMedia();
-    } catch (e) {
-        console.error("Error initializing slideshow:", e);
-    }
-}
-
-initSlideshow();
-})
+});
