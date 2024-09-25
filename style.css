@@ -7,6 +7,8 @@
     --background-color: #ecf0f1; /* אפור בהיר */
     --text-color: #2c3e50; /* כחול כהה */
     --accent-color: #f1c40f; /* צהוב זהב */
+
+    
 }
 
 * {
@@ -105,6 +107,24 @@ nav {
 
 /* Responsive Navigation */
 @media (max-width: 768px) {
+    nav {
+        display: flex;
+        justify-content: center; /* Center the logo */
+        align-items: center;     /* Vertically center items */
+        position: relative;      /* Establish a positioning context for the hamburger */
+        padding: 15px 20px;      /* Adjust padding as needed */
+    }
+
+    
+
+    .hamburger-icon {
+        position: absolute;
+        right: 20px;  /* Position the hamburger menu 20px from the right */
+        top: 50%;
+        transform: translateY(-50%); /* Vertically center the hamburger icon */
+        display: block; /* Ensure it's visible on mobile */
+    }
+
     .menu-items {
         display: none;
         flex-direction: column;
@@ -123,11 +143,9 @@ nav {
         margin: 10px 0;
         text-align: center;
     }
-
-    .hamburger-icon {
-        display: block;
-    }
 }
+
+
 
 /* Hero Section (Main Page Only) */
 .hero {
