@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const media = [
             { type: 'video', src: 'yossipointing.mp4' },
             { type: 'video', src: 'C0052 (edited).mp4' },
-            { type: 'video', src: 'C5862 (edited).mp4' },
+            
             { type: 'video', src: 'huyhappy.mp4' }
         ];
 
