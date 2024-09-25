@@ -68,8 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const slideshowContainer = document.querySelector('.slideshow-container');
         const media = [
             { type: 'video', src: 'yossipointing.mp4' },
-            { type: 'video', src: 'C0052 (edited).mp4' },
-            
+          
             { type: 'video', src: 'huyhappy.mp4' }
         ];
 
