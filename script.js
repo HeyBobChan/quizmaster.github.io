@@ -45,19 +45,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Custom Cursor Effect
-    const cursor = document.createElement('div');
-    cursor.classList.add('custom-cursor');
-    document.body.appendChild(cursor);
+const cursor = document.createElement('div');
+cursor.classList.add('custom-cursor');
+document.body.appendChild(cursor);
 
-    document.addEventListener('mousemove', function(e) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
+let prevX = null; // Store previous mouse X position
+let scaleX = 1;   // Default scale (not flipped)
+
+document.addEventListener('mousemove', function(e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
 
     // Wiggle Effect
-    document.addEventListener('mousemove', function(e) {
-        cursor.style.transform = `translate(-50%, -50%) rotate(${Math.sin(e.clientX * 0.05) * 10}deg)`;
-    });
+    let rotation = Math.sin(e.clientX * 0.05) * 10;
+
+    // Determine direction and flip image if necessary
+    if (prevX !== null) {
+        if (e.clientX > prevX) {
+            // Mouse is moving right
+            scaleX = -1; // Flip horizontally
+        } else if (e.clientX < prevX) {
+            // Mouse is moving left
+            scaleX = 1; // Default orientation
+        }
+        // If e.clientX == prevX, keep the previous scaleX
+    }
+    prevX = e.clientX;
+
+    // Apply transformations
+    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scaleX(${scaleX})`;
+});
+
 
     // Ensure default cursor is hidden
     // Remove the line that hides the default cursor
@@ -69,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const media = [
             { type: 'video', src: 'yossipointing.mp4'},
             { type: 'video', src: 'C0052.mp4'},
-            { type: 'video', src: 'C5862.mp4' },
+         //   { type: 'video', src: 'C5862.mp4' },
             { type: 'video', src: 'C0051.mp4' },
             { type: 'video', src: 'huyhappy.mp4'}
             

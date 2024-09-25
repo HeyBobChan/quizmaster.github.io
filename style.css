@@ -295,9 +295,9 @@ footer .social-icons a:hover {
     top: 0;
     left: 0;
     pointer-events: none;
-    background: url('fish-cursor.png') no-repeat center center;
+    background: url('fish-removebg-preview.png') no-repeat center center;
     background-size: contain;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: transform 0.1s ease;
 }
 
