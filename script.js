@@ -67,9 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.hero')) {
         const slideshowContainer = document.querySelector('.slideshow-container');
         const media = [
-            { type: 'video', src: 'yossipointing.mp4' },
-          
-            { type: 'video', src: 'huyhappy.mp4' }
+            { type: 'video', src: 'yossipointing.mp4'},
+            { type: 'video', src: 'C5862 (edited) (1).mp4' },
+            { type: 'video', src: 'C0051 (edited) (1).mp4' },
+            { type: 'video', src: 'huyhappy.mp4' },
+            { type: 'video', src: 'C0052 (edited).mp4' }
+            
         ];
 
         let currentMediaIndex = 0;
